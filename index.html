@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Aplikasi Kriptografi - Caesar Chiper</title>
+	<meta charset="utf-8">
+  	<meta name="viewport" content="width=device-width, initial-scale=1">
+  	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+
+	<div class="jumbotron jumbotron-fluid" style="background-color: rgb(0, 89, 255)">
+  		<div class="container">
+    		<h1 style="color: white">Kriptografi Caesar Cipher</h1>
+			<p class="lead" style="color: white">Sistem Kriptografi Caesar Chiper Berbasis Website...</p>
+			<button type="button" class="btn btn-info" data-toggle="modal"  id="btn_selanjutnya" data-target="#exampleModal2">Selanjutnya</button>
+  		</div>
+	</div>
+  
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+	  <div class="modal-content">
+		<div class="modal-header">
+		  <h5 class="modal-title" id="exampleModalLabel">Enkripsi</h5>
+		  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+		  </button>
+		</div>
+		<div class="modal-body">
+		  Apakah anda yakin akan mengenkripsi data?
+		</div>
+		<div class="modal-footer">
+		  <button type="button" class="btn btn-secondary" data-dismiss="modal">Tidak</button>
+		  <button type="button" class="btn btn-primary" data-dismiss="modal" id="btn_enkripsi"  name="btn_enkripsi" onclick="enkripsi()">Ya</button>
+		</div>
+	  </div>
+	</div>
+  </div>
+
+  <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+	<div class="modal-dialog">
+	  <div class="modal-content">
+		<div class="modal-header">
+		  <h5 class="modal-title" id="exampleModalLabel2">Kriptografi Caesar Chiper</h5>
+		  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+		  </button>
+		</div>
+		<div class="modal-body">
+			Caesar chiper adalah salah satu teknik enkripsi yang paling sederhana dan paling dikenal. Caesar Cipher adalah algoritma yang digunakan oleh sistem kriptografi simetri dan digunakan jauh sebelum sistem kriptografi public key ditemukan, kriptografi klasik yang ada dan beberapa bentuk algoritma klasik dianggap optimal karena mudah dipecahkan. Caesar chiper merupakan jenis cipher substitusi di mana setiap huruf dalam plaintext digantikan oleh sebuah huruf dengan beberapa posisi tetap di bawah alfabet.
+		</div>
+		<div class="modal-footer">
+		  <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+		</div>
+	  </div>
+	</div>
+  </div>
+
+
+
+
+
+	<div class="container">
+		<div class="row">
+			<div class="col-md-2"></div>
+			<div class="col-md-8">
+				<form action="/action_page.php" id="formregister">
+    				<div class="form-group">
+    					<label for="plain text"><h5>Masukan text</h5></label>
+    					<textarea id="plain text" name="plain text" class="form-control"></textarea>
+    					<small class="text-muted">Masukan yang diperbolehkan: huruf</small>
+  					</div>
+  					<div class="form-group">
+    					<label for="katakunci"><h5>Kunci</h5></label>
+    					<input type="number" min="0" max="25" id="kunci" name="kunci" class="form-control col-md-6">
+    					<small class="text-muted">Masukan yang diperbolehkan: angka(1-25)</small>
+  					</div>
+  					<div class="form-group" id="enkripsi" style="display: none;">
+    					<label for="plain text"><h5>Hasil Enkripsi</h5></label>
+    					<textarea id="hasil_enkripsi" name="hasil_enkripsi" class="form-control"></textarea>
+  					</div>
+  					<div class="form-group" id="dekripsi" style="display: none;">
+    					<label for="plain text"><h5>Hasil Dekripsi</h5></label>
+    					<textarea id="hasil_dekripsi" name="hasil_dekripsi" class="form-control"></textarea>
+  					</div>
+  					<br>
+  					<div>
+						<button type="button" class="btn btn-primary" data-toggle="modal"  id="btn_modal_enkripsi" data-target="#exampleModal">Enkripsi</button>
+    					<button type="button" class="btn btn-primary" id="btn_dekripsi" name="btn_dekripsi" onclick="dekripsi()">Dekripsi</button>
+    					<button type="reset" class="btn btn-danger" id="btn_batal" name="btn_batal">Batal</button>
+    					<a href=""><button type="button" class="btn btn-danger" id="btn_reset" name="btn_reset" style="display: none;">Reset</button></a>
+  					</div>
+  				</form>
+			</div>
+  		</div>
+	</div>
+
+
+	<br><br>
+	<hr>
+		<div class="container">
+			<p>&copy; Faiz Ataka Ubaidillah || 5200411444</p>
+		</div>
+
+<script type="text/javascript">
+    function enkripsi() {
+		//Mengambil Velue
+        var text = document.getElementById("plain text").value;
+        var key = document.getElementById("kunci").value;
+
+        shift = (26 + key) % 26;
+        var result = "";
+        for (var i = 0; i < text.length; i++) {
+        	var c = text.charCodeAt(i);
+        	if (65 <= c && c <= 90) { result += String.fromCharCode((c - 65 + shift) % 26 + 65); } //uppercase
+        	else if (97 <= c && c <= 122) { result += String.fromCharCode((c - 97 + shift) % 26 + 97); } //lowercase
+        	else { result += text.charAt(i); }
+        }
+
+        document.getElementById("enkripsi").style.display = "block";
+        document.getElementById("hasil_enkripsi").value = result;
+        document.getElementById("btn_enkripsi").style.display = "none";
+        document.getElementById("btn_dekripsi").style.display = "none";
+		document.getElementById("btn_modal_enkripsi").style.display = "none";
+        document.getElementById("btn_batal").style.display = "none";
+        document.getElementById("btn_reset").style.display = "block";
+    }
+
+    function dekripsi() {
+    	var text = document.getElementById("plain text").value;
+        var key = document.getElementById("kunci").value;
+
+        shift = (26 - key) % 26;
+        var result = "";
+        for (var i = 0; i < text.length; i++) {
+        	var c = text.charCodeAt(i);
+        	if (65 <= c && c <= 90) { result += String.fromCharCode((c - 65 + shift) % 26 + 65); } //uppercase
+        	else if (97 <= c && c <= 122) { result += String.fromCharCode((c - 97 + shift) % 26 + 97); } //lowercase
+        	else { result += text.charAt(i); } 
+        }
+
+        document.getElementById("dekripsi").style.display = "block";
+        document.getElementById("hasil_dekripsi").value = result;
+        document.getElementById("btn_enkripsi").style.display = "none";
+        document.getElementById("btn_dekripsi").style.display = "none";
+        document.getElementById("btn_batal").style.display = "none";
+        document.getElementById("btn_reset").style.display = "block";
+    }
+
+</script>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
